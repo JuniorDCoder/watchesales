@@ -65,7 +65,7 @@ class SiteSettingsRequest extends FormRequest
             'whatsapp_number' => ['nullable', 'required_if:inquiry_channel,whatsapp', 'string', 'regex:/^\+?[0-9\s\-()]{7,20}$/'],
             'address' => ['nullable', 'string', 'max:255'],
             'business_hours' => ['nullable', 'string', 'max:120'],
-            'chatwoot_base_url' => ['nullable', 'required_if:inquiry_channel,chatwoot', 'url:https,http', 'max:255'],
+            'chatwoot_base_url' => ['nullable', 'required_if:inquiry_channel,chatwoot', 'required_with:chatwoot_website_token', 'url:https,http', 'max:255'],
             'chatwoot_website_token' => ['nullable', 'required_if:inquiry_channel,chatwoot', 'string', 'alpha_num', 'max:120'],
 
             'currency' => ['required', Rule::in(SiteSettings::CURRENCIES)],
@@ -91,6 +91,7 @@ class SiteSettingsRequest extends FormRequest
             'whatsapp_number.required_if' => 'A WhatsApp number is required when WhatsApp is the inquiry channel.',
             'whatsapp_number.regex' => 'Enter the WhatsApp number in international format, for example +1 (929) 796-3621.',
             'chatwoot_base_url.required_if' => 'The Chatwoot URL is required when live chat is the inquiry channel.',
+            'chatwoot_base_url.required_with' => 'The Chatwoot URL is required when a website token is set.',
             'chatwoot_website_token.required_if' => 'The Chatwoot website token is required when live chat is the inquiry channel.',
         ];
     }

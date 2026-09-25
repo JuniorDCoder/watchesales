@@ -26,7 +26,7 @@ import { index as watchesIndex } from '@/routes/watches';
 import type { Watch, WatchDetail } from '@/types';
 
 defineOptions({
-    layout: { floatingContactOnMobile: false },
+    layout: { mobileActionBar: true },
 });
 
 const props = defineProps<{

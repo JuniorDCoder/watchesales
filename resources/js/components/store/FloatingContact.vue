@@ -16,7 +16,7 @@ const isExpanded = computed(() => y.value < 400);
 
 <template>
     <div
-        v-if="site.inquiry.floatingButton"
+        v-if="site.inquiry.floatingButton && !site.inquiry.chatwoot"
         class="fixed right-4 bottom-4 z-40 sm:right-6 sm:bottom-6"
     >
         <button

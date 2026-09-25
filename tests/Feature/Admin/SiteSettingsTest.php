@@ -69,6 +69,26 @@ test('chatwoot credentials are only shared once a token is saved', function () {
     );
 });
 
+test('chatwoot is shared for the chat bubble whichever inquiry channel is chosen', function () {
+    $this->put(route('admin.settings.update'), settingsPayload([
+        'inquiry_channel' => 'email',
+        'chatwoot_base_url' => 'https://chat.example.com',
+        'chatwoot_website_token' => 'abc123XYZ',
+    ]))->assertSessionHasNoErrors();
+
+    $this->get(route('home'))->assertInertia(fn (Assert $page) => $page
+        ->where('site.inquiry.channel', 'email')
+        ->where('site.inquiry.chatwoot.websiteToken', 'abc123XYZ')
+    );
+});
+
+test('a chatwoot website token needs a chatwoot url', function () {
+    $this->put(route('admin.settings.update'), settingsPayload([
+        'chatwoot_base_url' => null,
+        'chatwoot_website_token' => 'abc123XYZ',
+    ]))->assertSessionHasErrors('chatwoot_base_url');
+});
+
 test('a new logo replaces the previous file', function () {
     $this->put(route('admin.settings.update'), settingsPayload(['logo' => UploadedFile::fake()->image('first.png')]));
     $firstPath = app(SiteSettings::class)->get('logo_path');

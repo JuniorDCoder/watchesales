@@ -391,8 +391,9 @@ function submit(): void {
                     <div>
                         <h2 class="font-medium">Inquiry channel</h2>
                         <p class="text-sm text-muted-foreground">
-                            Used by the enquire button on every watch and the
-                            floating contact button.
+                            Used by the enquire button on every watch. When
+                            Chatwoot is connected, its live chat bubble is
+                            always shown in the corner of every page.
                         </p>
                     </div>
                     <div
@@ -463,10 +464,17 @@ function submit(): void {
                     </div>
                     <InputError :message="form.errors.inquiry_channel" />
 
-                    <div
-                        v-if="form.inquiry_channel === 'chatwoot'"
-                        class="grid gap-4 rounded-lg border bg-muted/30 p-4"
-                    >
+                    <div class="grid gap-4 rounded-lg border bg-muted/30 p-4">
+                        <div class="grid gap-1">
+                            <h3 class="text-sm font-medium">
+                                Chatwoot live chat
+                            </h3>
+                            <p class="text-xs text-muted-foreground">
+                                Add a website token to show the Chatwoot chat
+                                bubble on every storefront page, whichever
+                                inquiry channel is selected.
+                            </p>
+                        </div>
                         <div class="grid gap-2">
                             <Label for="chatwoot_base_url">Chatwoot URL</Label>
                             <Input
@@ -493,8 +501,9 @@ function submit(): void {
                         </div>
                         <p class="flex gap-2 text-xs text-muted-foreground">
                             <AlertTriangle class="size-4 shrink-0" />
-                            If chat cannot load, visitors are sent to WhatsApp
-                            or email instead, so keep one of them filled in.
+                            If chat cannot load, live chat enquiries are sent to
+                            WhatsApp or email instead, so keep one of them
+                            filled in.
                         </p>
                     </div>
 
@@ -510,7 +519,8 @@ function submit(): void {
                             >
                             <span class="text-xs text-muted-foreground"
                                 >Keeps a contact button in the corner of every
-                                storefront page.</span
+                                storefront page. Replaced by the Chatwoot bubble
+                                when Chatwoot is connected.</span
                             >
                         </Label>
                         <Switch

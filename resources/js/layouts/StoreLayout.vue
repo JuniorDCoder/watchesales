@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted } from 'vue';
+import { onMounted, watch } from 'vue';
 import FloatingContact from '@/components/store/FloatingContact.vue';
 import SeoHead from '@/components/store/SeoHead';
 import StoreFooter from '@/components/store/StoreFooter.vue';
@@ -8,23 +8,33 @@ import { Toaster } from '@/components/ui/sonner';
 import { useSite } from '@/composables/useSite';
 import { loadChatwoot } from '@/lib/chatwoot';
 
-withDefaults(
+const props = withDefaults(
     defineProps<{
         transparentHeader?: boolean;
-        floatingContactOnMobile?: boolean;
+        mobileActionBar?: boolean;
     }>(),
     {
         transparentHeader: false,
-        floatingContactOnMobile: true,
+        mobileActionBar: false,
     },
 );
 
 const { site } = useSite();
 
 onMounted(() => {
+    watch(
+        () => props.mobileActionBar,
+        (raised) =>
+            document.documentElement.classList.toggle(
+                'chatwoot-raised',
+                raised,
+            ),
+        { immediate: true },
+    );
+
     const chatwoot = site.value.inquiry.chatwoot;
 
-    if (site.value.inquiry.channel !== 'chatwoot' || !chatwoot) {
+    if (!chatwoot) {
         return;
     }
 
@@ -57,9 +67,7 @@ onMounted(() => {
             <slot />
         </main>
         <StoreFooter />
-        <FloatingContact
-            :class="{ 'max-sm:hidden': !floatingContactOnMobile }"
-        />
+        <FloatingContact :class="{ 'max-sm:hidden': mobileActionBar }" />
         <Toaster />
     </div>
 </template>

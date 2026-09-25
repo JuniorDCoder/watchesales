@@ -19,8 +19,8 @@ declare global {
 let loading: Promise<ChatwootWidget> | null = null;
 
 /**
- * Load the Chatwoot widget once. The default bubble is hidden because the
- * storefront renders its own launcher that matches the site design.
+ * Load the Chatwoot widget once. Its own bubble is the storefront's floating
+ * launcher whenever Chatwoot is configured, whatever the inquiry channel.
  */
 export function loadChatwoot(config: ChatwootConfig): Promise<ChatwootWidget> {
     if (window.$chatwoot) {
@@ -29,7 +29,7 @@ export function loadChatwoot(config: ChatwootConfig): Promise<ChatwootWidget> {
 
     loading ??= new Promise<ChatwootWidget>((resolve, reject) => {
         window.chatwootSettings = {
-            hideMessageBubble: true,
+            hideMessageBubble: false,
             position: 'right',
             type: 'standard',
             darkMode: 'auto',
